@@ -32,7 +32,7 @@ class LongScript(Functions):
         # Making sure we are on inputs tab and resetting values to default settings.
         self.click_settings_button(wait)
         self.click_input_tab()
-        self.click_enable_long_strategy_checkbox()
+        # self.click_enable_long_strategy_checkbox()
         self.click_reset_all_inputs(wait)
         self.click_ok_button()
 

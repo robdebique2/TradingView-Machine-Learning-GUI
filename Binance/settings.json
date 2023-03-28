@@ -1,0 +1,11 @@
+{
+    "BinanceKeys": {
+        "API_Key": "a1WX6HmPLWJDv67LqSJ5AZvio3uKOVRe1urdLgl9w5Pu5MmdB7Uol7OMbs8tRadKf49a",
+        "Secret_Key": "1zAbAmVn3KQnfMWQLoozT3dwGuIwiNLSJ6MbLBTGOPhhT7fiuNpAMZSpvpppFljBD99z"
+    },
+    "TestKeys": {
+        "Test_API_Key": "066f735f9206aa494217b9fbed10de0644aa608f5d2fbe648ec8e62cfc2d2164",
+        "Test_Secret_Key": "16140b54202af67b697428fee49177ff4301889f2315a7759c20cacfd9037028"
+    },
+    "Testing": "True"
+}

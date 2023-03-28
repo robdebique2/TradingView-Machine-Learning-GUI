@@ -10,3 +10,5 @@ debug.log
 geckodriver.log
 .idea/.name
 geckodriver.log
+/settings.json
+settings.json

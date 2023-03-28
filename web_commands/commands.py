@@ -6,6 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
 
 
 class Functions(Main):
@@ -322,31 +323,39 @@ class Functions(Main):
             click_short_checkbox.click()
 
     def click_reset_all_inputs(self, wait):
-        """click and reset all input text boxes to 50."""
+        """click and reset all input text boxes to defaults."""
         wait.until(
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "input-oiYdY6I4"))
+            EC.presence_of_element_located((By.ID, "study-defaults-manager"))
         )
-        long_stoploss_input_box = self.driver.find_elements(
-            By.CLASS_NAME, "input-oiYdY6I4"
-        )[2]
-        long_takeprofit_input_box = self.driver.find_elements(
-            By.CLASS_NAME, "input-oiYdY6I4"
-        )[3]
-        short_stoploss_input_box = self.driver.find_elements(
-            By.CLASS_NAME, "input-oiYdY6I4"
-        )[4]
-        short_takeprofit_input_box = self.driver.find_elements(
-            By.CLASS_NAME, "input-oiYdY6I4"
-        )[5]
-        long_stoploss_input_box.send_keys(Keys.BACK_SPACE * 4)
-        long_stoploss_input_box.send_keys(str("20"))
-        long_takeprofit_input_box.send_keys(Keys.BACK_SPACE * 4)
-        long_takeprofit_input_box.send_keys(str("20"))
-        short_stoploss_input_box.send_keys(Keys.BACK_SPACE * 4)
-        short_stoploss_input_box.send_keys(str("20"))
-        short_takeprofit_input_box.send_keys(Keys.BACK_SPACE * 4)
-        short_takeprofit_input_box.send_keys(str("20"))
-        short_takeprofit_input_box.send_keys(Keys.ENTER)
+        self.driver.find_element(By.ID, "study-defaults-manager").click()
+        print("default clicked")
+        self.driver.find_element(By.CSS_SELECTOR, "div.defaultsButtonItem-CXKzQOaV:nth-child(1)").click()
+
+
+        # wait.until(
+        #     EC.presence_of_all_elements_located((By.CLASS_NAME, "input-oiYdY6I4"))
+        # )
+        # long_stoploss_input_box = self.driver.find_elements(
+        #     By.CLASS_NAME, "input-oiYdY6I4"
+        # )[2]
+        # long_takeprofit_input_box = self.driver.find_elements(
+        #     By.CLASS_NAME, "input-oiYdY6I4"
+        # )[3]
+        # short_stoploss_input_box = self.driver.find_elements(
+        #     By.CLASS_NAME, "input-oiYdY6I4"
+        # )[4]
+        # short_takeprofit_input_box = self.driver.find_elements(
+        #     By.CLASS_NAME, "input-oiYdY6I4"
+        # )[5]
+        # long_stoploss_input_box.send_keys(Keys.BACK_SPACE * 4)
+        # long_stoploss_input_box.send_keys(str("20"))
+        # long_takeprofit_input_box.send_keys(Keys.BACK_SPACE * 4)
+        # long_takeprofit_input_box.send_keys(str("20"))
+        # short_stoploss_input_box.send_keys(Keys.BACK_SPACE * 4)
+        # short_stoploss_input_box.send_keys(str("20"))
+        # short_takeprofit_input_box.send_keys(Keys.BACK_SPACE * 4)
+        # short_takeprofit_input_box.send_keys(str("20"))
+        # short_takeprofit_input_box.send_keys(Keys.ENTER)
 
     # Get Commands
     """ The get commands will get the stoploss and take profit data that tradingview returns to user. """
