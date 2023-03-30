@@ -3,6 +3,7 @@ import os
 # Developed libraries
 import binance_interaction
 import strategy
+import environment
 
 
 # Variable for the location of settings.json
@@ -26,18 +27,17 @@ def get_project_settings(importFilepath):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # Get the status
-    status = binance_interaction.query_binance_status()
+    # Get client
+    client = environment.get_spot_client()
+    status = True
+
     if status:
         # Import project settings
-        project_settings = get_project_settings(import_filepath)
-        # Set the keys
-        api_key = project_settings['BinanceKeys']['Test_API_Key']
-        secret_key = project_settings['BinanceKeys']['Test_Secret_Key']
+
         # Retrieve account information
-        account = binance_interaction.query_account(api_key=api_key, secret_key=secret_key)
+        account = binance_interaction.query_account(client=client)
         if account['canTrade']:
             print("Let's Do This!")
-            # strategy.strategy_one(timeframe="1h", percentage_rise=1, quote_asset="BUSD", project_settings=project_settings)
+            strategy.strategy_one(client=client, timeframe="1h", percentage_rise=0.1, quote_asset="ETHBUSD")
 
 

@@ -1,29 +1,34 @@
-import json
-import os
-from binance.client import Client
+import binance_interaction as bi
+import strategy
+import environment
 
-# Function to import settings from settings.json
-def get_project_settings(importFilepath):
-    # Test the filepath to sure it exists
-    if os.path.exists(importFilepath):
-        # Open the file
-        f = open(importFilepath, "r")
-        # Get the information from file
-        project_settings = json.load(f)
-        # Close the file
-        f.close()
-        # Return project settings to program
-        return project_settings
-    else:
-        return ImportError
+client = environment.get_spot_client()
+# client = Spot(base_url=base_url, key=api_key, secret=secret_key)
+print(client.time())
+# print(client.klines("BTCUSDT","1m"))
 
-project_settings = get_project_settings("settings.json")
-# Set the keys
-api_key = project_settings['TestKeys']['Test_API_Key']
-secret_key = project_settings['TestKeys']['Test_Secret_Key']
+# Get account and balance information
+print("Client details")
+response = client.account()
+for x in response["balances"]:
+    print(x)
 
-# create client object
-client = Client(api_key, secret_key, testnet=True)
+# params = {
+#     "symbol": "BTCUSDT",
+#     "side": "BUY",
+#     "type": "MARKET",
+#     "quantity": 0.001,
+# }
+params = {'symbol': 'ETHBUSD', 'side': 'BUY', 'type': 'STOP_LOSS_LIMIT', 'timeInForce': 'GTC', 'quantity': 0.25, 'price': 1605.99, 'trailingDelta': 100}
+# bi.make_trade_with_params(client=client, params=params)
+# response = client.new_order(**params)
+# print(response)
+# print(client.my_trades(symbol="ETHUSDT"))
+orders = bi.query_open_trades(client)
+for order in orders:
+    print(order)
 
-print(client.get_account())
+# bi.cancel_all_orders_by_symbol(symbol="ETHBUSD", client=client)
+# bi.cancel_order_by_id(symbol="ETHBUSD", id=9692171, client=client)
+
 

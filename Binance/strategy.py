@@ -65,6 +65,8 @@ def analyze_symbols(symbol_dataframe, timeframe, percentage_rise):
         if analysis:
             # Append to trading symbols
             trading_symbols.append(symbol_dataframe['symbol'][ind])
+            # print(trading_symbols)
+            # return trading_symbols
         # Sleep for one second
         time.sleep(0.1)
     # New: Return an array of symbols
@@ -72,7 +74,7 @@ def analyze_symbols(symbol_dataframe, timeframe, percentage_rise):
 
 
 # Function defining strategy one
-def strategy_one(timeframe, percentage_rise, quote_asset, project_settings):
+def strategy_one(client, timeframe, percentage_rise, quote_asset):
     # Declare an array for trading symbols
     trading_symbols = []
     # Declare a value for previous time
@@ -92,14 +94,14 @@ def strategy_one(timeframe, percentage_rise, quote_asset, project_settings):
             # Step 1: Cancel all orders which haven't executed in the last hour
             print("Step 1: Cancelling open orders")
             # Get a list of open trades
-            open_trades = binance_interaction.query_open_trades(project_settings=project_settings)
+            open_trades = binance_interaction.query_open_trades(client=client)
             # Iterate through the list
             for trades in open_trades:
                 # Check to see if qty has been purchased
                 executed_qty = float(trades['executedQty'])
                 if executed_qty == 0:
                     # If none, cancel
-                    binance_interaction.cancel_order_by_symbol(trades['symbol'], project_settings=project_settings)
+                    binance_interaction.cancel_all_orders_by_symbol(trades['symbol'], client)
                     print("Order Canceled")
                     # Remove from trading_array
                     trading_symbols.remove(trades['symbol'])
@@ -107,17 +109,25 @@ def strategy_one(timeframe, percentage_rise, quote_asset, project_settings):
             print("Step 2: Analyzing Assets")
             # Retrieve a list of assets from Binance
             asset_list = binance_interaction.query_quote_asset_list(quote_asset_symbol=quote_asset)
+            print('asset list = ')
+            print(asset_list)
             # Retrieve current symbols to trade
             new_trading_symbols = analyze_symbols(symbol_dataframe=asset_list, timeframe=timeframe, percentage_rise=percentage_rise)
+            print('new trading symbols')
+            print(new_trading_symbols)
+            # ['ALGOBUSD', 'DGBBUSD', 'ANTBUSD', 'CRVBUSD', 'MDTBUSD', 'IMXBUSD']
             # See if symbols are already being traded
             for symbol in new_trading_symbols:
                 if symbol not in trading_symbols:
                     # If symbol not already being traded, calculate the trading parameters
                     print(f"Opening trade on new symbol: {symbol}")
                     trade_parameters = calculate_trade_parameters(symbol=symbol, timeframe=timeframe, asset_list=asset_list)
+                    print('trade parameters')
+                    print(trade_parameters)
                     # Make a trade
                     try:
-                        trade_outcome = binance_interaction.make_trade_with_params(params=trade_parameters, project_settings=project_settings)
+                        # trade_outcome = binance_interaction.make_trade_with_params(params=trade_parameters, project_settings=project_settings)
+                        trade_outcome = binance_interaction.make_trade_with_params(client, params=params)
                         print(trade_outcome)
                         # If trade successful, add to trading symbols
                         trading_symbols.append(symbol)
