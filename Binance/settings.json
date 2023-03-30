@@ -1,8 +1,8 @@
 {
     "BinanceKeys": {
         "Base_URL": "",
-        "API_Key": "1zWX6HmPLWJDv67LqSJ5AZvio3uKOVRe1urdLgl9w5Pu5MmdB7Uol7OMbs8tRadKf4y1",
-        "Secret_Key": "gGAbAmVn3KQnfMWQLoozT3dwGuIwiNLSJ6MbLBTGOPhhT7fiuNpAMZSpvpppFljBD9qQ"
+        "API_Key": "",
+        "Secret_Key": ""
     },
     "TestFuturesKeys": {
         "Base_URL": "https://testnet.binance.vision",
