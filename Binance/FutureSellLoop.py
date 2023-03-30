@@ -6,7 +6,7 @@ import environment
 
 client = environment.get_futures_client()
 
-maxRows = 120
+maxRows = 150
 symbol = 'ETHUSDT'
 quantity = 1
 timeframe = Client.KLINE_INTERVAL_5MINUTE
